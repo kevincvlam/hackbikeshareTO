@@ -1,5 +1,9 @@
 /* STYYYYYYLE!!! */
 
+.content {
+	margin: 10px;
+}
+
 .header {
 	height: 100px;
 	width: 100%;
@@ -7,9 +11,23 @@
 	font-family: 'Open Sans';
 	text-transform: uppercase;
 	
-	background-color: #107054;
+	background-color: #2eb458;
 }
 
+p {
+	margin: 0px;
+}
+
+div.desc {
+	width: 100%;
+	text-align: center;
+}
+
+div.desc > p {
+	max-width: 640px;
+	display: block;
+	margin: 0 auto;
+}
 
 /* Forms */
 
@@ -29,12 +47,16 @@
 }
 
 .icon {
-	height: 40px;
-	width: 40px;
+	height: 30px;
+	width: 30px;
+	padding-right: 2px;
 }
 
 .icon img {
 	display: block
+	height: 30px;
+	width: 100%;
+	margin: 0 auto;
 }
 
 input {
@@ -44,9 +66,59 @@ input {
 	padding: auto 10px;
 }
 
-input.submit {
+input.submit, .button {
 	border: 0px;
 	font-weight: 500;
-	color: #11171f;
+	color: #FFFFFF;
+	background-color: #107054;
+}
+
+.button, a	 {
+	height: 40px;
+	width: 100%;
+	margin-bottom: 10px;
+	text-align: center;
+	vertical-align: middle;
+	text-decoration: none;
+	display: table;
+	padding: 10px 0;
+}
+
+.button:hover {
 	background-color: #2eb458;
+}
+
+/* Route Steps */
+
+.route {
+	display: table;
+	width: 100%;
+	margin-bottom: 10px;
+}
+
+.routeIcon, .stepText {
+	display: table-cell;
+	border: 1px solid #c0c0c0;
+}
+
+.stepText {
+	width: 100%;
+	vertical-align: middle;
+}
+
+div.routeIcon > img {
+	display: table-cell;
+	height: 64px;
+	width: 64px;
+	padding: 8px;
+}
+
+.stepText > p {
+	text-align; left;
+	margin-left: 10px;
+}
+
+.minorText {
+	font-size: 0.9em;
+	color: #939598;
 }

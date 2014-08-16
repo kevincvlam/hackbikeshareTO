@@ -1,0 +1,83 @@
+<!doctype html>
+<head>
+<title>hackbikeshareTO Project API Page</title>
+<!-- Latest compiled and minified CSS -->
+<link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+<!-- Optional theme -->
+<link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/bootstrap-theme.min.css') }}">
+<!-- Custom CSS -->
+<link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/style.css') }}">
+<!-- Latest compiled and minified JavaScript -->
+<script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+</head>
+<body>
+	<h1 class="header">Bike Share Trip Planner</h1>
+	<div class="content">
+		<h2>Displaying Route from {{ origin }} to {{ destination }}</h2>
+		<a href=""><div class="button">View Map</div></a>
+		<div class="route">
+			<div class="step">
+				<div class="routeIcon">
+					<img src="/static/images/origin.png">
+				</div>
+				<div class="stepText">
+					<p>Start Location</p>
+				</div>
+			</div>
+			<div class="step">
+				<div class="routeIcon">
+					<img src="/static/images/straight.png">
+				</div>
+				<div class="stepText">
+					<p>Walk south to %StationA%</p>
+					<p class="minorText">3 minutes</p>
+				</div>
+			</div>
+			<div class="step">
+				<div class="routeIcon">
+					<img src="/static/images/pickup.png">
+				</div>
+				<div class="stepText">
+					<p>Do something</p>
+					<p class="minorText">80% probability of an available bike in 3 minutes</p>
+				</div>
+			</div>
+			<div class="step">
+				<div class="routeIcon">
+					<img src="/static/images/left.png">
+				</div>
+				<div class="stepText">
+					<p>Ride down that street over there. Yeah, that's the one.</p>
+					<p class="minorText">6 minutes</p>
+				</div>
+			</div>
+			<div class="step">
+				<div class="routeIcon">
+					<img src="/static/images/pickup.png">
+				</div>
+				<div class="stepText">
+					<p>Dock at Station B </p>
+					<p class="minorText">95% probability of an available dock in 9 minutes</p>
+				</div>
+			</div>
+			<div class="step">
+				<div class="routeIcon">
+					<img src="/static/images/right.png">
+				</div>
+				<div class="stepText">
+					<p>Walk to some place.</p>
+					<p class="minorText">2 minutes</p>
+				</div>
+			</div>
+			<div class="step">
+				<div class="routeIcon">
+					<img src="/static/images/dest.png">
+				</div>
+				<div class="stepText">
+					<p>You're here!</p>
+				</div>
+			</div>
+		</div>
+		<a href=""><div class="button">Modify Route</div></a>
+		<a href=""><div class="button">New Route</div></a>
+</body>

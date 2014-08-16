@@ -11,27 +11,35 @@
 <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
 </head>
 <body>
-	<h1 class="header">Bike Share Trip Planner</h1>
-	<p>Enter the addresses of your starting location and destination, and we’ll find you a route using Bike Share!</p>
-	<div class="inputForm">
-		<form>
-			<div class="fieldContainer">
-				<div class="icon">
-					<img>
+	<div class="content">
+		<h1 class="header">Bike Share Trip Planner</h1>
+		<p>Enter the addresses of your starting location and destination, and we’ll find you a route using Bike Share!</p>
+		<div class="inputForm">
+			<form">
+				<div class="fieldContainer">
+					<div class="icon">
+						<img src="/static/images/origin.png">
+					</div>
+					<div class="field">
+						<input type="text" name="origin" placeholder="Starting Location" /><br />
+					</div>
 				</div>
-				<div class="field">
-					<input type="text" name="origin" value="Starting Location" /><br />
+				<div class="fieldContainer">
+					<div class="icon">
+						<img src="/static/images/dest.png">
+					</div>
+					<div class="field">
+						<input type="text" name="destination" placeholder="Destination "/><br />
+					</div>
 				</div>
-			</div>
-			<div class="fieldContainer">
-				<div class="icon">
-					<img>
-				</div>
-				<div class="field">
-					<input type="text" name="destination" value="Destination "/><br />
-				</div>
-			</div>
-			<input class="submit" type="submit" value="Find me a route!"/>
-		</form>
+				<input class="submit" type="submit" value="Find me a route!" action="{{ route }}" method="post"/>
+			
+				<form method="POST" action="/">
+					{{ form.hidden_tag() }}
+					{{ form.name.label }} {{ form.name(size=20) }}
+					<input type="submit" value="Go">
+				</form>
+			</form>
+		</div>
 	</div>
 </body>
