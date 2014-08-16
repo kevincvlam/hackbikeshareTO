@@ -3,6 +3,7 @@ from neareststation import returnNearestStation, googleDisDurAPI, readStations, 
 from directions import directions
 from flask import Flask, render_template, jsonify, request
 app = Flask(__name__)
+#app.config['SERVER_NAME'] = 'localhost:1234'
 '''
 # Initializations
 '''
@@ -60,6 +61,12 @@ def walkDuration():
 @app.route('/api/nearest', methods = ['GET'])
 def closestStation():
 	poi = request.args.get('poi')
+
+	# Return Mock Data for Now
+	mock = {'ID':7000, 'Name': 'Madison Ave / Bloor St W', 'Latitude': 43.639832, 'Longitude':-79.402761}
+	return jsonify(mock)
+    
+    # Real Function
 	if poi is None:
 		return render_template('error.html')
 	station = returnNearestStation(poi)
@@ -92,7 +99,8 @@ def walkPath():
 	return directions(start, end, 'walking').text;
 
 # Error Page
-@app.route('/error', methods =['GET'])
+@app.route('/error')
+@app.route('/error/')
 def error():
 	return render_template('error.html')
 
