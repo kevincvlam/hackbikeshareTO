@@ -1,4 +1,5 @@
 from datetime import datetime
+from neareststation import returnNearestStation, googleDisDurAPI, readStations
 from flask import Flask, render_template, jsonify, request
 app = Flask(__name__)
 
@@ -49,13 +50,16 @@ def walkDuration():
 
 @app.route('/api/closeststationwithbike', methods = ['GET'])
 @app.route('/api/closestStationWithBike', methods = ['GET'])
-def closestStationWithBike():
-	return jsonify(station)
-
 @app.route('/api/closestStationWithDock', methods = ['GET'])
 @app.route('/api/closeststationwithdock', methods = ['GET'])
-def closestStationWithDock():
-	return jsonify(station)
+def closestStation():
+	poi = request.args.get('pointofinterest')
+	if poi is None:
+		render_template('error.html')
+	station = returnNearestStation(poi)
+	json = {'ID': station[0], 'Name': station[1]}
+	return jsonify(json)
+
 
 @app.route('/api/bikePath', methods = ['GET'])
 @app.route('/api/bikepath', methods = ['GET'])
@@ -70,6 +74,7 @@ def walkPath():
 '''
 # Example Code And Tests
 '''
+# Returns the params
 @app.route('/argtest', methods =['GET'])
 def argtest():
 	start = request.args.get('start')
@@ -80,9 +85,18 @@ def argtest():
 		end = 'N/A'	
 	return 'start: ' + start + ' end: '+end;	
 
+# Return the Query String
 @app.route('/returnstring/')
 def adhoc_test():
 	return request.query_string
+
+# Call the nearest station
+@app.route('/closest')
+def closestToHome():
+	station = returnNearestStation("45 Ulster, Toronto, ON")
+	return "ID: " + station[0] + " Station: " + station[1] 
+
+
 
 '''
 Main Function for Running Locally
