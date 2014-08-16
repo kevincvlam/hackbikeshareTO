@@ -1,0 +1,105 @@
+<!doctype html>
+<head>
+<title>hackbikeshareTO Project API Page</title>
+<!-- Latest compiled and minified CSS -->
+<link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+<!-- Optional theme -->
+<link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/bootstrap-theme.min.css') }}">
+<!-- Latest compiled and minified JavaScript -->
+<script src="{{ url_for('static', filename='js/jquery-2.1.1.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/knockout-3.1.0.js') }}"></script>
+
+</head>
+
+
+<body>
+	<div class=container>
+	  <h1>hackbikeshareTO Test Case Page</h1>
+	  <div class=metanav>
+	</div>
+
+    <h2 data-bind="value: statusmsg"></h2>
+    <p><input data-bind="value: origin" placeholder="Starting Location"/></p>
+    <p><input data-bind="value: destination" placeholder="Destination" /></p>
+    <div>
+        <button data-bind="click: findRoute">Find me a route!</button>
+    </div>
+
+    <p data-bind="route"></p>
+
+<script>
+// Here's my data model
+var ViewModel = function(origin, dest) {
+    this.origin = ko.observable(origin);
+    this.destination = ko.observable(dest);
+    this.statusmsg = ko.observable();
+    this.route = ko.observable();
+ 
+    this.numberOfClicks = ko.observable(0);
+    this.findRoute = function() {
+        //console.log(this.origin() + " to " + this.destination() )
+
+        // Take origin and dest
+        o = this.origin();
+        d = this.destination();
+
+        // Display a Loading Icon
+        //this.statusmsg("Loading...");
+
+        // find stations near origin and dest
+        var baseurl = "http://localhost:5000/api/nearest?poi=";
+        var oreq = baseurl+o.replace(/\s+/g, '')
+        var dreq = baseurl+d.replace(/\s+/g, '');
+        var origin_station;
+        var dest_station;
+
+        $.ajax({
+            url: oreq,
+            dataType: "json",
+            //async: false,
+            type: 'GET',
+            success: function (data) {
+                  // write your parsing code..
+                  origin_station = data;
+            },
+            error: function (err) {
+                 window.location.href = "http://localhost:5000/error/";
+            }
+        });
+
+        $.ajax({
+            url: dreq,
+            dataType: "json",
+            async: false,
+            type: 'GET',
+            success: function (data) {
+                  // write your parsing code..
+                  dest_station = data;
+            },
+            error: function (err) {
+                 window.location.href = "http://localhost:5000/error/";
+            }
+        });
+
+        //Remove Loading Msg
+        //this.statusmsg('');
+
+        console.log(origin_station);
+        console.log(dest_station);
+
+        // put directions to station from origin
+
+        this.route("Origin Station: "+origin_station);
+        // find station near dest
+        // put directions between stations
+
+        // put directions to destination station
+    };
+};
+ 
+ko.applyBindings(new ViewModel("", "")); // This makes Knockout get to work
+
+
+</script>
+</body>

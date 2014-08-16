@@ -57,10 +57,11 @@ def walkDuration():
 @app.route('/api/closestStationWithBike', methods = ['GET'])
 @app.route('/api/closestStationWithDock', methods = ['GET'])
 @app.route('/api/closeststationwithdock', methods = ['GET'])
+@app.route('/api/nearest', methods = ['GET'])
 def closestStation():
 	poi = request.args.get('poi')
 	if poi is None:
-		render_template('error.html')
+		return render_template('error.html')
 	station = returnNearestStation(poi)
 	json = {'ID': station[0], 'Name': station[1], 'Latitude': station[3], 'Longitude':station[4]}
 	return jsonify(json)
@@ -90,6 +91,11 @@ def walkPath():
 		end = '633 Bay St, Toronto ON'
 	return directions(start, end, 'walking').text;
 
+# Error Page
+@app.route('/error', methods =['GET'])
+def error():
+	return render_template('error.html')
+
 '''
 # Example Code And Tests
 '''
@@ -114,6 +120,17 @@ def adhoc_test():
 def closestToHome():
 	station = returnNearestStation("45 Ulster, Toronto, ON")
 	return "ID: " + station[0] + " Station: " + station[1] 
+
+# # Test Case Page
+@app.route('/test')
+def testcase():
+	return render_template('testcase.html')
+
+# Test Knockout
+@app.route('/knockout')
+def knockout():
+	return render_template('knockouttest.html')
+
 
 '''
 Main Function for Running Locally
