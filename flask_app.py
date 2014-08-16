@@ -63,7 +63,7 @@ def closestStation():
 	poi = request.args.get('poi')
 
 	# Return Mock Data for Now
-	mock = {'ID':7000, 'Name': 'Madison Ave / Bloor St W', 'Latitude': 43.639832, 'Longitude':-79.402761}
+	mock = {'ID':7003, 'Name': 'Madison Ave / Bloor St W', 'Latitude': 43.667158, 'Longitude':-79.402761}
 	return jsonify(mock)
     
     # Real Function
@@ -84,7 +84,7 @@ def bikePath():
 		start = '633 Bay St, Toronto ON'
 	if end is None:
 		end = '633 Bay St, Toronto ON'
-	return directions(start, end, 'bicycling').text;
+	return jsonify ( directions(start, end, 'bicycling') );
 
 @app.route('/api/walkPath', methods = ['GET'])
 @app.route('/api/walkpath', methods = ['GET'])
@@ -96,7 +96,7 @@ def walkPath():
 		start = '633 Bay St, Toronto ON'
 	if end is None:
 		end = '633 Bay St, Toronto ON'
-	return directions(start, end, 'walking').text;
+	return jsonify ( directions(start, end, 'walking') );
 
 # Error Page
 @app.route('/error')
