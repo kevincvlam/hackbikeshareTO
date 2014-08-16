@@ -1,0 +1,128 @@
+<!doctype html>
+<head>
+<title>hackbikeshareTO Project API Page</title>
+<!-- Latest compiled and minified CSS -->
+<link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+<!-- Optional theme -->
+<link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/bootstrap-theme.min.css') }}">
+<!-- Latest compiled and minified JavaScript -->
+<script src="{{ url_for('static', filename='js/jquery-2.1.1.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/knockout-3.1.0.js') }}"></script>
+
+</head>
+
+
+<body>
+	<div class=container>
+	  <h1>hackbikeshareTO Test Case Page</h1>
+	  <div class=metanav>
+	</div>
+
+    <h2 data-bind="text: statusmsg"></h2>
+    <p><input data-bind="value: origin" placeholder="Starting Location"/></p>
+    <p><input data-bind="value: destination" placeholder="Destination" /></p>
+    <div>
+        <button data-bind="click: findRoute">Find me a route!</button>
+    </div>
+
+    <h2 data-bind="text: routeHeading"></h2>
+    <p data-bind="html: route"></p>
+
+<script>
+// Here's my data model
+var ViewModel = function(origin, dest) {
+    this.origin = ko.observable(origin);
+    this.destination = ko.observable(dest);
+    this.statusmsg = ko.observable();
+    this.route = ko.observable();
+    this.routeHeading = ko.observable();
+ 
+    this.numberOfClicks = ko.observable(0);
+    this.findRoute = function() {
+        //console.log(this.origin() + " to " + this.destination() )
+
+        // Take origin and dest
+        origin = this.origin();
+        destination = this.destination();
+
+        // Display a Loading Icon
+        this.statusmsg("Loading...");
+
+        // find stations near origin and dest
+        var baseurl = "http://localhost:5000/api/nearest?poi=";
+        var oreq = baseurl+origin.replace(/\s+/g, '')
+        var dreq = baseurl+destination.replace(/\s+/g, '');
+        var origin_station;
+        var dest_station;
+
+        $.ajax({
+            url: oreq,
+            dataType: "json",
+            async: false,
+            type: 'GET',
+            success: function (data) {
+                  // write your parsing code..
+                  origin_station = data;
+            },
+            error: function (err) {
+                 window.location.href = "http://localhost:5000/error/";
+            }
+        });
+
+        $.ajax({
+            url: dreq,
+            dataType: "json",
+            async: false,
+            type: 'GET',
+            success: function (data) {
+                  // write your parsing code..
+                  dest_station = data;
+            },
+            error: function (err) {
+                 window.location.href = "http://localhost:5000/error/";
+            }
+        });
+
+        //Remove Loading Msg
+        this.statusmsg('');
+
+        console.log(origin_station);
+        console.log(dest_station);
+
+
+        var routestr = '';
+        this.routeHeading("Computed Route");
+        // put directions to station from origin
+        routestr = "<h3>Directions from "+origin+" to "+origin_station['Name']+"</h3>";
+
+        req = 'http://localhost:5000/api/walkPath?origin='+origin+'&destination='+origin_station['Latitude']+','+origin_station['Longitude'];
+        $.ajax({
+            url: req,
+            dataType: "json",
+            async: false,
+            type: 'GET',
+            success: function (data) {
+                  // write your parsing code..
+                  console.log(data);
+            },
+            error: function (err) {
+                 window.location.href = "http://localhost:5000/error/";
+            }
+        });
+        
+        // find station near dest
+        // put directions between stations
+
+        // put directions to destination station
+
+        //print route
+        this.route(routestr);
+    };
+};
+ 
+ko.applyBindings(new ViewModel("633 Bay St, Toronto ON", "45 Ulster, Toronto On")); // This makes Knockout get to work
+
+
+</script>
+</body>
