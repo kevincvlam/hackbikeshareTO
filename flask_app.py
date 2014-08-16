@@ -1,15 +1,11 @@
 from datetime import datetime
-from flask import Flask
+from flask import Flask, render_template
 app = Flask(__name__)
 
 @app.route('/')
 def hello_world():
-    return 'Hello World!'
+    return 'Our App is Coming Soon!!'
 
-@app.route('/the-time')
-def the_time():
-     cur_time = str(datetime.now())
-     return cur_time + ' is the current time!  ...YEAH!'
-
-if __name__ == '__main__':
-    app.run()
+@app.route('/api/')
+def api_help():
+	return render_template('api.html')
