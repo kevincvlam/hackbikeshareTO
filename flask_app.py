@@ -31,6 +31,7 @@ station = {'id':1}
 # Services
 '''
 @app.route('/api/bikeduration', methods = ['GET'])
+@app.route('/api/bikeDuration', methods = ['GET'])
 def bikeDuration():
 	# Read in Arguments
 	start = request.args.get('start')
@@ -39,6 +40,7 @@ def bikeDuration():
 	return jsonify(tripDuration)
 
 @app.route('/api/walkduration', methods = ['GET'])
+@app.route('/api/walkDuration', methods = ['GET'])
 def walkDuration():
 	# Read in Arguments
 	start = request.args.get('start')
@@ -46,17 +48,21 @@ def walkDuration():
 	return jsonify(tripDuration)
 
 @app.route('/api/closeststationwithbike', methods = ['GET'])
+@app.route('/api/closestStationWithBike', methods = ['GET'])
 def closestStationWithBike():
 	return jsonify(station)
 
+@app.route('/api/closestStationWithDock', methods = ['GET'])
 @app.route('/api/closeststationwithdock', methods = ['GET'])
 def closestStationWithDock():
 	return jsonify(station)
 
+@app.route('/api/bikePath', methods = ['GET'])
 @app.route('/api/bikepath', methods = ['GET'])
 def bikePath():
 	return 'NOT READY'
 
+@app.route('/api/walkPath', methods = ['GET'])
 @app.route('/api/walkpath', methods = ['GET'])
 def walkPath():
 	return 'NOT READY'
