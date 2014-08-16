@@ -7,4 +7,4 @@ sys.path.append(
 from flup.server.fcgi import WSGIServer
 from flask_app import app as application
 
-WSGIServer(application).run(debug=True)
+WSGIServer(application).run()
