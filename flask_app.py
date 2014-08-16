@@ -7,7 +7,7 @@ app = Flask(__name__)
 '''
 @app.route('/')
 def hello_world():
-    return 'Our App is Coming Soon!!'
+	return 'Our App is Coming Soon!!'
 
 '''
 # Help Page
@@ -26,19 +26,23 @@ tripDuration = {'minutes':20}
 # Services
 '''
 @app.route('/api/tripduration', methods = ['GET'])
-def get_tasks():
+def tripduration():
 	# Read in Arguments
 	start = request.args.get('start')
 	end = request.args.get('end')
 	weather = request.args.get('weather')
-	# Do actual stuff
+	return jsonify(tripDuration)
 
-    return jsonify(tripDuration)
+def walkduration():
+	# Read in Arguments
+	start = request.args.get('start')
+	end = request.args.get('end')
+	return jsonify(tripDuration)
 
-
-''' 
+'''
 # Example Code And Tests
 '''
+
 @app.route('/argtest', methods =['GET'])
 def argtest():
 	start = request.args.get('start')
@@ -47,14 +51,14 @@ def argtest():
 		start = 'N/A'
 	if end is None:
 		end = 'N/A'	
-	return 'start: ' + start + ' end: '+end
+	return 'start: ' + start + ' end: '+end;	
 
 @app.route('/returnstring/')
 def adhoc_test():
-    return request.query_string
+	return request.query_string
 
 '''
 Main Function for Running Locally
 '''
 if __name__ == '__main__':
-    app.run(debug = True)
+	app.run(debug = True)

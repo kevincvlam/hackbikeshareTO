@@ -1,4 +1,5 @@
 <!doctype html>
+<head>
 <title>hackbikeshareTO Project API Page</title>
 <!-- Latest compiled and minified CSS -->
 <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
@@ -6,9 +7,41 @@
 <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/bootstrap-theme.min.css') }}">
 <!-- Latest compiled and minified JavaScript -->
 <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+</head>
 
 
-<div class=page>
-  <h1>hackbikeshareTO Project API</h1>
-  <div class=metanav>
-</div>
+<body>
+	<div class=container>
+	  <h1>hackbikeshareTO Project API</h1>
+	  <div class=metanav>
+		 <table class="table table-bordered table-striped">
+		      <thead>
+		        <tr>
+		          <th>API Call</th>
+		          <th>Description</th>
+		        </tr>
+		      </thead>
+		      <tbody>
+		        <tr>
+		       	<!-- API CALL ROW -->
+		          <td>
+		          	/api/tripDuration?start=X&end=Y&weather=W
+		          </td>
+		          <td>
+		          	Takes in the start bixi station, end bixi station, and weather and returns the estimated trip duration in minutes as a JSON object.
+		          </td>
+		        </tr>
+		        <!-- END API CALL ROW -->
+		        <!-- API CALL ROW -->
+		          <td>
+		          	/api/walkDuration?start=X&end=Y
+		          </td>
+		          <td>
+		          	Takes in the starting location, end location, and returns the estimated trip duration. This API call pulls information from Google Maps, and requires (ADDRESS OR COORDS?) given as input arguments.
+		          </td>
+		        </tr>
+		        <!-- END API CALL ROW -->
+		      </tbody>
+		    </table>
+	</div>
+</body>
