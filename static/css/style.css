@@ -1,0 +1,52 @@
+/* STYYYYYYLE!!! */
+
+.header {
+	height: 100px;
+	width: 100%;
+	color: #ffffff;
+	font-family: 'Open Sans';
+	text-transform: uppercase;
+	
+	background-color: #107054;
+}
+
+
+/* Forms */
+
+.inputForm {
+	width: 460px;
+	margin: auto;
+}
+
+.fieldContainer {
+	display: table;
+	width: 100%;
+}
+
+.icon, field {
+	display: table-cell;
+	width: auto;
+}
+
+.icon {
+	height: 40px;
+	width: 40px;
+}
+
+.icon img {
+	display: block
+}
+
+input {
+	height: 40px;
+	width: 100%;
+	margin-bottom: 5px;
+	padding: auto 10px;
+}
+
+input.submit {
+	border: 0px;
+	font-weight: 500;
+	color: #11171f;
+	background-color: #2eb458;
+}

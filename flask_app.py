@@ -13,11 +13,11 @@ stations = readStations();
 '''
 @app.route('/')
 def hello_world():
-	return 'Our App is Coming Soon!!'
+	return render_template('index.html')
 	
 @app.route('/ryanspage')
 def ryan():
-	return 'Hi i am Ryans page'
+	return 'All hail Ryan!'
 
 '''
 # Help Page
