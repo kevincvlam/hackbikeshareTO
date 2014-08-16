@@ -9,6 +9,15 @@ def googleDisDurAPI(origin, destination):
 	distance = obj['rows'][0]['elements'][0]['distance']['value']
 	return [distance, duration];
 
+# One for Biking
+def distDur(origin, destination, mode):
+	r = requests.get('http://maps.googleapis.com/maps/api/distancematrix/json?origins='+origin+'&destinations='+destination+'&mode='+mode+'&language=EN')
+	#print(r.json())
+	obj = json.loads(r.text)
+	duration = obj['rows'][0]['elements'][0]['duration']['text']
+	distance = obj['rows'][0]['elements'][0]['distance']['value']
+	return [distance, duration];
+	
 # Read in the Station Data
 # ( ID, Name, Total Docks, Latitude, Longitude)
 def readStations():
