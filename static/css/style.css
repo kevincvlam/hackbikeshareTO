@@ -221,6 +221,10 @@ iframe.gmap {
 		display: inline-block;
 		margin-right: 10px;
 	}
+	
+	.button {
+		margin: 0px auto;
+	}
 }
 
 @media (min-width: 960px) {
