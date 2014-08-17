@@ -12,6 +12,13 @@ body {
 	padding: 10px;
 }
 
+.step img{
+	display: table-cell;
+	height: 64px;
+	width: 64px;
+	padding: 8px
+}
+
 .header {
 	height: 100px;
 	width: 100%;
@@ -85,6 +92,7 @@ div.desc {
 	height: 30px;
 	width: 100%;
 	margin: 0 auto;
+	padding: 4px
 }
 
 input {
