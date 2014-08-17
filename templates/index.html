@@ -84,9 +84,7 @@ var ViewModel = function(origin, dest) {
         destination = this.destination();
 
        //Route to Page Giving Correct Arguments
-       //baseurl = "http://localhost:5000"
-       baseurl = ''
-       window.location.href = baseurl+"/route?origin="+origin+"&dest="+destination;
+       window.location.href = "/route?origin="+origin+"&dest="+destination;
     };
 };
  
