@@ -200,6 +200,7 @@ iframe.gmap {
 	.viewing-map {
 		display: block;
 		float: left;
+		width: 60%;
 	}
 	
 	.map {
