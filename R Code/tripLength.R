@@ -1,7 +1,4 @@
-tripLength <- function(startStationID,endStationID){
-  
-  ## Load relavent CSV files & packages into workspace
-  trips <- read.csv("HackBikeShareTO-Trips.csv")
+tripLength <- function(trips,startStationID,endStationID){
   
   trips <- trips[,c("Trip.ID", "Duration", "Start.Date", "Start.Station.ID", "End.Station.ID")]
   colnames(trips)[3] <- "Date"

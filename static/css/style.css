@@ -34,7 +34,6 @@ h1, h2, h3, h4, h5 {
 	
 	color: #ffffff;
 	font-family: 'Actor', 'Arial', 'Sans Serif';
-	font-variant: small-caps;
 	text-align: center;	
 	background-color: #107054;
 }
@@ -104,7 +103,7 @@ input {
 	height: 40px;
 	width: 100%;
 	margin-bottom: 5px;
-	padding: auto 10px;
+	padding: 10px;
 }
 
 input.submit, .button {
@@ -120,6 +119,7 @@ input.submit, .button {
 	text-decoration: none;
 	display: table;
 	padding: 10px 0;
+	margin: 10px auto;
 }
 
 .button:hover, input.submit:hover {
@@ -198,9 +198,9 @@ iframe.gmap {
 	}
 
 	.viewing-map {
-		max-width: 60%;
 		display: block;
 		float: left;
+		width: 60%;
 	}
 	
 	.map {
@@ -222,6 +222,10 @@ iframe.gmap {
 		display: inline-block;
 		margin-right: 10px;
 	}
+	
+	.button {
+		margin: 0px auto;
+	}
 }
 
 @media (min-width: 960px) {
@@ -237,9 +241,4 @@ iframe.gmap {
 	.steps {
 		width: 400px;
 	}
-}
-
-@media (max-width: 640px) {
-	/* Only show those buttons on small screens */
-	
 }

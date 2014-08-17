@@ -1,11 +1,9 @@
-markovChain_HackBikeShareTO <- function(stationID,weekday,hour,tripLength){
+markovChain_HackBikeShareTO <- function(rebal,stations,stationID,weekday,hour,tripLength){
 
-## Load relavent CSV files & packages into workspace
-rebal <- read.csv("HackBikeShareTO-Rebalancing.csv")  ###Rebalancing
-stations <- read.csv("HackBikeShareTO-Stations.csv")   ### Stations
+## Load relavent packages into workspace
 source("splitDateTime.R")
 source("setFlags.R")
-source("FindProbability.R")
+source("FindProbabilities.R")
 source("createProbabilityMatrix.R")
 source("PowerMatrix.R")
 library(chron)
