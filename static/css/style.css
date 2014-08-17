@@ -34,7 +34,6 @@ h1, h2, h3, h4, h5 {
 	
 	color: #ffffff;
 	font-family: 'Actor', 'Arial', 'Sans Serif';
-	font-variant: small-caps;
 	text-align: center;	
 	background-color: #107054;
 }
@@ -120,6 +119,7 @@ input.submit, .button {
 	text-decoration: none;
 	display: table;
 	padding: 10px 0;
+	margin: 10px auto;
 }
 
 .button:hover, input.submit:hover {
