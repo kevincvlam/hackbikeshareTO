@@ -31,7 +31,7 @@
 </head>
 <body>
 	<h1 class="header">Bike Share Trip Planner</h1>
-	<div class="content">
+	<div class="content routePage">
 		<h3>Displaying Route from {{origin}} to {{dest}}</h3>
 		<div id="steps" class="viewing-steps">
 			<a href="#map"><div class="button view-map">View Map</div></a>
@@ -312,7 +312,7 @@ var ViewModel = function(origin, dest) {
     	}
     }
 
-	$('.gmap').attr({'src':'https://www.google.com/maps/embed/v1/directions?key=AIzaSyBgpZh_ygx-7JaLNMeZ8gg6LbTFp6g78vU&origin={{origin}}&waypoints='+origin_station['Latitude']+','+origin_station['Longitude']+'|'+dest_station['Latitude']+','+dest_station['Longitude']+'&destination={{dest}}&mode=bicycling'});
+	$('.gmap').attr({'src':'https://www.google.com/maps/embed/v1/directions?key=AIzaSyBgpZh_ygx-7JaLNMeZ8gg6LbTFp6g78vU&origin={{origin}}&waypoints='+origin_station['Latitude']+','+origin_station['Longitude']+'|'+dest_station['Latitude']+','+dest_station['Longitude']+'&destination={{dest}}&zoom=14&mode=bicycling'});
 
     //Print Route
     this.route(routestr);

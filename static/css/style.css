@@ -9,8 +9,11 @@ h1, h2, h3, h4, h5 {
 }
 
 .content {
-	margin: 10px;
+	padding: 10px;
 	max-width: 960px;
+}
+
+.routePage, #step1 {
 	background-color: #fafafa;
 	border: 1px solid #d9d9d9;
 	padding: 10px;
@@ -53,9 +56,6 @@ p {
 	margin: 50px auto;
 	padding: 20px;
 	text-align: center;
-}
-
-#step1, .viewing-steps, .viewing-map {
 }
 
 div.desc {
@@ -114,19 +114,16 @@ input.submit, .button {
 	background-color: #2eb458;
 }
 
-.button, a	 {
-	height: 40px;
+.button {
 	width: 100%;
-	margin-bottom: 10px;
 	text-align: center;
-	vertical-align: middle;
 	text-decoration: none;
 	display: table;
 	padding: 10px 0;
 }
 
 .button:hover, input.submit:hover {
-	background-color: #41FF7D;
+	background-color: #34CC64;
 }
 
 /* Route Steps */
@@ -240,4 +237,9 @@ iframe.gmap {
 	.steps {
 		width: 400px;
 	}
+}
+
+@media (max-width: 640px) {
+	/* Only show those buttons on small screens */
+	
 }
