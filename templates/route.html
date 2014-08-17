@@ -85,7 +85,7 @@ function getIconStr(instr, leg) {
     else if(instr.indexOf("south") > -1){
         return 'S'
     }
-	else if(instr.indexOf("straight") > -1 || instr.indexOf("up") > -1){
+	else if(instr.indexOf("straight") > -1 || instr.indexOf("up") || instr.indexOf("Continue") > -1){
 		return 'straight'
 	}
 	else if(instr.indexOf("back") > -1 || instr.indexOf("down") > -1){
