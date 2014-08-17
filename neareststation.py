@@ -1,4 +1,4 @@
-import requests, json, sys
+import requests, json, sys, math
 
 # Use the google maps API to report the distance and trip time if walking
 def googleDisDurAPI(origin, destination):
@@ -31,19 +31,45 @@ def readStations():
 	return stations
 
 def returnNearestStation(origin):
+	# Get Coordinates of Origin
+	uri = 'http://open.mapquestapi.com/geocoding/v1/address?key=Fmjtd%7Cluur25ut2h%2C2a%3Do5-9w70l0&callback=renderOptions&inFormat=kvp&outFormat=json&location='+origin+'&thumbMaps=false&maxResults=1'
+	#print uri
+	geocodeResp = requests.get(uri)
+	jsonText = geocodeResp.text
+	jsonText = jsonText[jsonText.index('(')+1:jsonText.index(')')]
+	print jsonText
+	obj = json.loads(jsonText)
+	#print(obj)
+	latitude = obj['results'][0]['locations'][0]['latLng']['lat']
+	longitude = obj['results'][0]['locations'][0]['latLng']['lng']
+	latitude = math.radians(latitude)
+	longitude = math.radians(longitude)
+
 	#Find the closest Station by brute force
 	stations = readStations();
 	closestStation = stations[0]
 	minDistance = sys.maxint
 	for station in stations:
-		lat =  station[3]
-		lon = station[4]
-		address = lat+","+lon
-		curdist = googleDisDurAPI(origin, address)[0]
+		lat = math.radians(float(station[3]))
+		lon = math.radians(float(station[4]))
+		R = 6371 # Radius of the Earth
+		theta1 = latitude
+		theta2 = lat 
+		delTheta = (lat-latitude)
+		delLamda = (lon-longitude)
+
+		a = math.sin(delTheta/2)*math.sin(delTheta/2)
+		+ math.cos(theta1)*math.cos(theta2)*math.sin(delLamda/2)*math.sin(delLamda/2)
+
+		c = 2 * math.atan(math.sqrt(a)/math.sqrt(1-a))
+
+		curdist = R * c
 		if(curdist < minDistance):
 			minDistance = curdist
 			closestStation = station
 	return closestStation
+
+
 
 # stations = readStations();
 # closestStation = stations[0]

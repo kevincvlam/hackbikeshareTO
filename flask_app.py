@@ -84,12 +84,12 @@ def closestStation():
 	poi = request.args.get('poi')
 
 	# Return Mock Data for Now
-	if("Bay" in poi):
-		mock = {'ID':7041, 'Name': 'Edward St / Yonge St', 'Latitude': 43.65702, 'Longitude':-79.382249}
-		return jsonify(mock)
-	else:
-		mock = {'ID':7003, 'Name': 'College St / Borden', 'Latitude': 43.657, 'Longitude':-79.4056}
-		return jsonify(mock)
+	# if("Bay" in poi):
+	# 	mock = {'ID':7041, 'Name': 'Edward St / Yonge St', 'Latitude': 43.65702, 'Longitude':-79.382249}
+	# 	return jsonify(mock)
+	# else:
+	# 	mock = {'ID':7003, 'Name': 'College St / Borden', 'Latitude': 43.657, 'Longitude':-79.4056}
+	# 	return jsonify(mock)
 
     
     # Real Function
