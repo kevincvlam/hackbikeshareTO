@@ -52,14 +52,18 @@
 		<div id="map" class="viewing-map">
 			<a href="#steps"><div class="button view-steps">View Steps</div></a>
 			<div class="map">
-				<img src="/static/images/mapPlaceholder.png" />
+				<iframe class="gmap"
+				  src="https://www.google.com/maps/embed/v1/directions?key=AIzaSyBgpZh_ygx-7JaLNMeZ8gg6LbTFp6g78vU&origin={{origin}}&destination={{dest}}&mode=bicycling">
+				</iframe>
 			</div><!-- #map -->
 		</div> <!-- #viewing-map -->
-		<a href="/?origin={{origin}}&dest={{dest}}"><div class="button">Modify Route</div></a>
-		<a href="/"><div class="button">New Route</div></a>
+		<div class="backToHome">
+			<a href="/?origin={{origin}}&dest={{dest}}"><div class="button">Modify Route</div></a>
+			<a href="/"><div class="button">New Route</div></a>
+		</div>
 <script>
 
-// OTHER COE  /////////////////////////////////////////////////////////////////////
+// OTHER CODE  /////////////////////////////////////////////////////////////////////
 function getIconStr(instr, leg) {
 	if(instr.indexOf("left") > -1 || instr.indexOf("west") > -1){
 		return 'left'
@@ -293,6 +297,8 @@ var ViewModel = function(origin, dest) {
         	routestr = routestr + '<p class="minorText">'+legC[i]['distance']['text']+', '+legC[i]['duration']['text']+"</p></div></div>";
     	}
     }
+
+	$('.gmap').attr({'src':'https://www.google.com/maps/embed/v1/directions?key=AIzaSyBgpZh_ygx-7JaLNMeZ8gg6LbTFp6g78vU&origin={{origin}}&waypoints='+origin_station['Latitude']+','+origin_station['Longitude']+'|'+dest_station['Latitude']+','+dest_station['Longitude']+'&destination={{dest}}&mode=bicycling'});
 
     //Print Route
     this.route(routestr);
