@@ -67,16 +67,28 @@
 
 // OTHER CODE  /////////////////////////////////////////////////////////////////////
 function getIconStr(instr, leg) {
-	if(instr.indexOf("left") > -1 || instr.indexOf("west") > -1){
+	if(instr.indexOf("left") > -1){
 		return 'left'
 	}
-	else if(instr.indexOf("right") > -1 || instr.indexOf("east") > -1){
+    else if(instr.indexOf("west") > -1){
+        return 'W'
+    }
+	else if(instr.indexOf("right") > -1 ){
 		return 'right'
 	}
-	else if(instr.indexOf("straight") > -1 || instr.indexOf("up") > -1 || instr.indexOf("north") > -1){
+    else if(instr.indexOf("east") > -1){
+        return 'E'
+    }
+    else if(instr.indexOf("north") > -1){
+        return 'N'
+    }
+    else if(instr.indexOf("south") > -1){
+        return 'S'
+    }
+	else if(instr.indexOf("straight") > -1 || instr.indexOf("up") > -1){
 		return 'straight'
 	}
-	else if(instr.indexOf("back") > -1 || instr.indexOf("down") > -1 || instr.indexOf("south") > -1){
+	else if(instr.indexOf("back") > -1 || instr.indexOf("down") > -1){
 		return 'turnaround'
 	}
 	else if(instr.indexOf("Destination") > -1){
