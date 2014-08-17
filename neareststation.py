@@ -52,18 +52,20 @@ def returnNearestStation(origin):
 	for station in stations:
 		lat = math.radians(float(station[3]))
 		lon = math.radians(float(station[4]))
-		R = 6371 # Radius of the Earth
-		theta1 = latitude
-		theta2 = lat 
-		delTheta = (lat-latitude)
-		delLamda = (lon-longitude)
+		# Calculate Distance
+		# R = 6371 # Radius of the Earth
+		# theta1 = latitude
+		# theta2 = lat 
+		# delTheta = (lat-latitude)
+		# delLamda = (lon-longitude)
 
-		a = math.sin(delTheta/2)*math.sin(delTheta/2)
-		+ math.cos(theta1)*math.cos(theta2)*math.sin(delLamda/2)*math.sin(delLamda/2)
+		# a = math.sin(delTheta/2)*math.sin(delTheta/2)
+		# + math.cos(theta1)*math.cos(theta2)*math.sin(delLamda/2)*math.sin(delLamda/2)
 
-		c = 2 * math.atan(math.sqrt(a)/math.sqrt(1-a))
+		# c = 2 * math.atan(math.sqrt(a)/math.sqrt(1-a))
 
-		curdist = R * c
+		# curdist = R * c
+		curdist = math.sqrt((lat-latitude)*(lat-latitude)+(lon-longitude)*(lon-longitude))
 		if(curdist < minDistance):
 			minDistance = curdist
 			closestStation = station
