@@ -201,7 +201,7 @@ var ViewModel = function(origin, dest) {
     }
 
     //Second Leg of Trip
-    req = 'http://localhost:5000/api/walkPath?origin='+dest_station['Latitude']+','+dest_station['Longitude']+'&dest='+origin_station['Latitude']+','+origin_station['Longitude'];
+    req = 'http://localhost:5000/api/walkPath?origin='+origin_station['Latitude']+','+origin_station['Longitude']+'&dest='+dest_station['Latitude']+','+dest_station['Longitude'];
     var legB;        
     $.ajax({
         url: req,
