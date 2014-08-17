@@ -1,0 +1,39 @@
+<!doctype html>
+<head>
+<title>hackbikeshareTO Project API Page</title>
+<!-- Latest compiled and minified CSS -->
+<link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+<!-- Optional theme -->
+<link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/bootstrap-theme.min.css') }}">
+<!-- Custom CSS -->
+<link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/style.css') }}">
+<!-- Latest compiled and minified JavaScript -->
+<script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+</head>
+<body>
+	<h1 class="header">Bike Share Trip Planner</h1>
+	<div class="content">
+		<p>Enter the addresses of your starting location and destination, and we’ll find you a route using Bike Share!</p>
+		<div class="inputForm">
+			<form">
+				<div class="fieldContainer">
+					<div class="icon">
+						<img src="/static/images/origin.png">
+					</div>
+					<div class="field">
+						<input type="text" name="origin" placeholder="Starting Location" /><br />
+					</div>
+				</div>
+				<div class="fieldContainer">
+					<div class="icon">
+						<img src="/static/images/dest.png">
+					</div>
+					<div class="field">
+						<input type="text" name="destination" placeholder="Destination "/><br />
+					</div>
+				</div>
+				<input class="submit" type="submit" value="Find me a route!" action="{{ route }}" method="post"/>
+			</form>
+		</div>
+	</div>
+</body>

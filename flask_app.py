@@ -1,7 +1,7 @@
 from datetime import datetime
 from neareststation import returnNearestStation, googleDisDurAPI, readStations, distDur
 from directions import directions
-from flask import Flask, render_template, jsonify, request
+from flask import Flask, render_template, jsonify, request, url_for
 app = Flask(__name__)
 #app.config['SERVER_NAME'] = 'localhost:1234'
 '''
@@ -10,15 +10,36 @@ app = Flask(__name__)
 stations = readStations();
 
 '''
-# Home Page
+# Main Pages
 '''
 @app.route('/')
 def index():
-	return render_template('index.html')
-	
+	origin = request.args.get('origin')
+	dest = request.args.get('dest')
+	if origin is None:
+		origin = ''
+	if dest is None:
+		dest = ''
+
+	return render_template('index.html', origin=origin, dest=dest)
+
 @app.route('/route')
 def route():
-	return render_template('route.html')
+	origin = request.args.get('origin')
+	dest = request.args.get('dest')
+	return render_template('route.html', origin=origin, dest=dest)
+
+
+'''
+Mock ups
+'''
+@app.route('/ryanindex')
+def ryanindex():
+	return render_template('ryanindex.html')
+	
+@app.route('/ryanroute')
+def ryanroute():
+	return render_template('ryanroute.html')
 
 '''
 # Help Page
