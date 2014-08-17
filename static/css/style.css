@@ -143,8 +143,16 @@ div.routeIcon > img {
 	overflow: hidden;
 }
 
-.map img {
+iframe.gmap {
+	display: table-cell;
 	height: 100%;
+	width: 100%;
+	max-height: 640px;
+}
+
+.backToHome {
+	display: block;
+	clear: left;
 }
 
 @media (min-width: 641px) {
@@ -160,16 +168,43 @@ div.routeIcon > img {
 	}
 
 	.viewing-map {
-		max-width: 50%;
+		max-width: 60%;
 		display: block;
 		float: left;
 	}
 	
 	.map {
-		height: 480px;
+		height: 640px;
+		width: 100%;
 	}
 	
-	.view-map, .view-steps {
+	.view-map, .view-steps, .view-map > a, .view-steps > a {
 		display: none;
+	}
+	
+	.backToHome {
+		max-width: 40%;
+		clear: left;
+	}
+	
+	.backToHome > * {
+		width: 45%;
+		float: left;
+		margin-right: 10px;
+	}
+}
+
+@media (min-width: 960px) {
+	.content {
+		margin: auto;
+		max-width: 960px;
+	}
+
+	.map {
+		width: 560px;
+	}
+	
+	.steps {
+		width: 400px;
 	}
 }
