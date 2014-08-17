@@ -198,7 +198,6 @@ iframe.gmap {
 	}
 
 	.viewing-map {
-		max-width: 60%;
 		display: block;
 		float: left;
 	}
@@ -237,9 +236,4 @@ iframe.gmap {
 	.steps {
 		width: 400px;
 	}
-}
-
-@media (max-width: 640px) {
-	/* Only show those buttons on small screens */
-	
 }

@@ -312,7 +312,7 @@ var ViewModel = function(origin, dest) {
     	}
     }
 
-	$('.gmap').attr({'src':'https://www.google.com/maps/embed/v1/directions?key=AIzaSyBgpZh_ygx-7JaLNMeZ8gg6LbTFp6g78vU&origin={{origin}}&waypoints='+origin_station['Latitude']+','+origin_station['Longitude']+'|'+dest_station['Latitude']+','+dest_station['Longitude']+'&destination={{dest}}&zoom=14&mode=bicycling'});
+	$('.gmap').attr({'src':'https://www.google.com/maps/embed/v1/directions?key=AIzaSyBgpZh_ygx-7JaLNMeZ8gg6LbTFp6g78vU&origin={{origin}}&waypoints='+origin_station['Latitude']+','+origin_station['Longitude']+'|'+dest_station['Latitude']+','+dest_station['Longitude']+'&destination={{dest}}&mode=bicycling&zoom=15'});
 
     //Print Route
     this.route(routestr);
