@@ -120,7 +120,7 @@ var ViewModel = function(origin, dest) {
     this.statusmsg("Loading...");
 
     // find stations near origin and dest
-    var baseurl = "http://hackbikeshareto.kevincvlam.com/api/nearest?poi=";
+    var baseurl = "http://localhost:5000/api/nearest?poi=";
     var oreq = baseurl+origin
     var dreq = baseurl+destination
     var origin_station;
@@ -136,7 +136,7 @@ var ViewModel = function(origin, dest) {
               origin_station = data;
         },
         error: function (err) {
-             //window.location.href = "http://hackbikeshareto.kevincvlam.com/error/";
+             //window.location.href = "http://localhost:5000/error/";
         }
     });
 
@@ -150,7 +150,7 @@ var ViewModel = function(origin, dest) {
               dest_station = data;
         },
         error: function (err) {
-             //window.location.href = "http://hackbikeshareto.kevincvlam.com/error/";
+             //window.location.href = "http://localhost:5000/error/";
         }
     });
 
@@ -166,7 +166,7 @@ var ViewModel = function(origin, dest) {
     
 
     //First Leg of the Trip
-    req = 'http://hackbikeshareto.kevincvlam.com/api/walkPath?origin='+origin+'&dest='+origin_station['Latitude']+','+origin_station['Longitude'];
+    req = 'http://localhost:5000/api/walkPath?origin='+origin+'&dest='+origin_station['Latitude']+','+origin_station['Longitude'];
     var legA;        
     $.ajax({
         url: req,
@@ -182,7 +182,7 @@ var ViewModel = function(origin, dest) {
               console.log(legA);
         },
         error: function (err) {
-             //window.location.href = "http://hackbikeshareto.kevincvlam.com/error/";
+             //window.location.href = "http://localhost:5000/error/";
         }
     });
 
@@ -215,7 +215,7 @@ var ViewModel = function(origin, dest) {
     }
 
     //Second Leg of Trip
-    req = 'http://hackbikeshareto.kevincvlam.com/api/walkPath?origin='+origin_station['Latitude']+','+origin_station['Longitude']+'&dest='+dest_station['Latitude']+','+dest_station['Longitude'];
+    req = 'http://localhost:5000/api/walkPath?origin='+origin_station['Latitude']+','+origin_station['Longitude']+'&dest='+dest_station['Latitude']+','+dest_station['Longitude'];
     var legB;        
     $.ajax({
         url: req,
@@ -231,7 +231,7 @@ var ViewModel = function(origin, dest) {
               console.log(legB);
         },
         error: function (err) {
-             //window.location.href = "http://hackbikeshareto.kevincvlam.com/error/";
+             //window.location.href = "http://localhost:5000/error/";
         }
     });
 
@@ -264,7 +264,7 @@ var ViewModel = function(origin, dest) {
     }
 
     //Third Leg of Trip
-    req = 'http://hackbikeshareto.kevincvlam.com/api/walkPath?origin='+dest_station['Latitude']+','+dest_station['Longitude']+'&dest='+destination;
+    req = 'http://localhost:5000/api/walkPath?origin='+dest_station['Latitude']+','+dest_station['Longitude']+'&dest='+destination;
     var legC;        
     $.ajax({
         url: req,
@@ -280,7 +280,7 @@ var ViewModel = function(origin, dest) {
               console.log(legC);
         },
         error: function (err) {
-             //window.location.href = "http://hackbikeshareto.kevincvlam.com/error/";
+             //window.location.href = "http://localhost:5000/error/";
         }
     });
 
