@@ -105,6 +105,22 @@ function getIconStr(instr, leg) {
     return 'origin'
 }
 
+function baseURL(){
+    current = window.location.href;
+    if(current.indexOf('.com') > - 1){
+        end = current.indexOf('.com')+4;
+    }
+    else if(current.indexOf('localhost') > - 1){
+        end = current.indexOf(':')+4;
+    }
+    else{
+        end = 0;
+    }
+    return current.substring(0, end)
+}
+
+console.log(baseURL());
+
 // DATA MODEL /////////////////////////////////////////////////////////////////////
 var ViewModel = function(origin, dest) {
     this.route = ko.observable();
