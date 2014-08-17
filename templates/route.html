@@ -29,9 +29,11 @@
 
 </head>
 <body>
-	<h1 class="header">Bike Share Trip Planner</h1>
+	<div class="header">
+		<h1>Bike Share Trip Planner</h1>
+	</div>
 	<div class="content">
-		<h2>Displaying Route from {{origin}} to {{dest}}</h2>
+		<h3>Displaying Route from {{origin}} to {{dest}}</h3>
 		<div id="steps" class="viewing-steps">
 			<a href="#map"><div class="button view-map">View Map</div></a>
 			<div class="route">
@@ -52,7 +54,7 @@
 		<div id="map" class="viewing-map">
 			<a href="#steps"><div class="button view-steps">View Steps</div></a>
 			<div class="map">
-				<iframe class="gmap"
+				<iframe class="gmap" scrolling="no" frameborder="0" border="0"
 				  src="https://www.google.com/maps/embed/v1/directions?key=AIzaSyBgpZh_ygx-7JaLNMeZ8gg6LbTFp6g78vU&origin={{origin}}&destination={{dest}}&mode=bicycling">
 				</iframe>
 			</div><!-- #map -->
