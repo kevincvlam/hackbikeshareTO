@@ -1,7 +1,7 @@
 from datetime import datetime
 from neareststation import returnNearestStation, googleDisDurAPI, readStations, distDur
 from directions import directions
-from flask import Flask, render_template, jsonify, request
+from flask import Flask, render_template, jsonify, request, url_for
 app = Flask(__name__)
 #app.config['SERVER_NAME'] = 'localhost:1234'
 '''
@@ -10,15 +10,36 @@ app = Flask(__name__)
 stations = readStations();
 
 '''
-# Home Page
+# Main Pages
 '''
 @app.route('/')
 def index():
-	return render_template('index.html')
-	
+	origin = request.args.get('origin')
+	dest = request.args.get('dest')
+	if origin is None:
+		origin = ''
+	if dest is None:
+		dest = ''
+
+	return render_template('index.html', origin=origin, dest=dest)
+
 @app.route('/route')
 def route():
-	return render_template('route.html')
+	origin = request.args.get('origin')
+	dest = request.args.get('dest')
+	return render_template('route.html', origin=origin, dest=dest)
+
+
+'''
+Mock ups
+'''
+@app.route('/ryanindex')
+def ryanindex():
+	return render_template('ryanindex.html')
+	
+@app.route('/ryanroute')
+def ryanroute():
+	return render_template('ryanroute.html')
 
 '''
 # Help Page
@@ -63,8 +84,13 @@ def closestStation():
 	poi = request.args.get('poi')
 
 	# Return Mock Data for Now
-	mock = {'ID':7000, 'Name': 'Madison Ave / Bloor St W', 'Latitude': 43.639832, 'Longitude':-79.402761}
-	return jsonify(mock)
+	if("Bay" in poi):
+		mock = {'ID':7041, 'Name': 'Edward St / Yonge St', 'Latitude': 43.65702, 'Longitude':-79.382249}
+		return jsonify(mock)
+	else:
+		mock = {'ID':7003, 'Name': 'College St / Borden', 'Latitude': 43.657, 'Longitude':-79.4056}
+		return jsonify(mock)
+
     
     # Real Function
 	if poi is None:
@@ -84,7 +110,7 @@ def bikePath():
 		start = '633 Bay St, Toronto ON'
 	if end is None:
 		end = '633 Bay St, Toronto ON'
-	return directions(start, end, 'bicycling').text;
+	return jsonify ( directions(start, end, 'bicycling') );
 
 @app.route('/api/walkPath', methods = ['GET'])
 @app.route('/api/walkpath', methods = ['GET'])
@@ -96,7 +122,7 @@ def walkPath():
 		start = '633 Bay St, Toronto ON'
 	if end is None:
 		end = '633 Bay St, Toronto ON'
-	return directions(start, end, 'walking').text;
+	return jsonify ( directions(start, end, 'walking') );
 
 # Error Page
 @app.route('/error')

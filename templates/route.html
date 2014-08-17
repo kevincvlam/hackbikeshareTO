@@ -8,8 +8,11 @@
 <!-- Custom CSS -->
 <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/style.css') }}">
 <!-- Latest compiled and minified JavaScript -->
+<script src="{{ url_for('static', filename='js/jquery-2.1.1.min.js') }}"></script>
 <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
-<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.11.1.min.js"></script>
+<script src="{{ url_for('static', filename='js/knockout-3.1.0.js') }}"></script>
+
+
 <script>
 	function viewMap() {
 		$(".viewing-steps").click(function(){
@@ -28,7 +31,7 @@
 <body>
 	<h1 class="header">Bike Share Trip Planner</h1>
 	<div class="content">
-		<h2>Displaying Route from PlaceA to PlaceB</h2>
+		<h2>Displaying Route from {{origin}} to {{dest}}</h2>
 		<div id="steps" class="viewing-steps">
 			<a href="#map"><div class="button view-map">View Map</div></a>
 			<div class="route">
@@ -37,62 +40,13 @@
 						<img src="/static/images/origin.png">
 					</div>
 					<div class="stepText">
-						<p>Start Location</p>
+						<p>{{origin}}</p>
 					</div>
 				</div>
-				<div class="step">
-					<div class="routeIcon">
-						<img src="/static/images/straight.png">
-					</div>
-					<div class="stepText">
-						<p>Walk south to %StationA%</p>
-						<p class="minorText">3 minutes</p>
-					</div>
-				</div>
-				<div class="step">
-					<div class="routeIcon">
-						<img src="/static/images/pickup.png">
-					</div>
-					<div class="stepText">
-						<p>Do something</p>
-						<p class="minorText">80% probability of an available bike in 3 minutes</p>
-					</div>
-				</div>
-				<div class="step">
-					<div class="routeIcon">
-						<img src="/static/images/left.png">
-					</div>
-					<div class="stepText">
-						<p>Ride down that street over there. Yeah, that's the one.</p>
-						<p class="minorText">6 minutes</p>
-					</div>
-				</div>
-				<div class="step">
-					<div class="routeIcon">
-						<img src="/static/images/dropoff.png">
-					</div>
-					<div class="stepText">
-						<p>Dock at Station B </p>
-						<p class="minorText">95% probability of an available dock in 9 minutes</p>
-					</div>
-				</div>
-				<div class="step">
-					<div class="routeIcon">
-						<img src="/static/images/right.png">
-					</div>
-					<div class="stepText">
-						<p>Walk to some place.</p>
-						<p class="minorText">2 minutes</p>
-					</div>
-				</div>
-				<div class="step">
-					<div class="routeIcon">
-						<img src="/static/images/dest.png">
-					</div>
-					<div class="stepText">
-						<p>You're here!</p>
-					</div>
-				</div>
+
+				<div data-bind="html: route"></div>
+
+
 			</div>
 		</div> <!-- #viewing-steps -->
 		<div id="map" class="viewing-map">
@@ -101,6 +55,253 @@
 				<img src="/static/images/mapPlaceholder.png" />
 			</div><!-- #map -->
 		</div> <!-- #viewing-map -->
-		<a href="/"><div class="button">Modify Route</div></a>
+		<a href="/?origin={{origin}}&dest={{dest}}"><div class="button">Modify Route</div></a>
 		<a href="/"><div class="button">New Route</div></a>
+<script>
+
+// OTHER COE  /////////////////////////////////////////////////////////////////////
+function getIconStr(instr, leg) {
+	if(instr.indexOf("left") > -1 || instr.indexOf("west") > -1){
+		return 'left'
+	}
+	else if(instr.indexOf("right") > -1 || instr.indexOf("east") > -1){
+		return 'right'
+	}
+	else if(instr.indexOf("straight") > -1 || instr.indexOf("up") > -1 || instr.indexOf("north") > -1){
+		return 'straight'
+	}
+	else if(instr.indexOf("back") > -1 || instr.indexOf("down") > -1 || instr.indexOf("south") > -1){
+		return 'turnaround'
+	}
+	else if(instr.indexOf("Destination") > -1){
+		if(leg == 1){
+			return 	'pickup'
+		}
+		else if(leg ==2){
+			return 'dropoff'
+		}
+		else{
+			return 'dest'
+		}
+	}
+    return 'origin'
+}
+
+// DATA MODEL /////////////////////////////////////////////////////////////////////
+var ViewModel = function(origin, dest) {
+    this.route = ko.observable();
+ 	this.statusmsg = ko.observable();
+
+    //console.log(this.origin() + " to " + this.destination() )
+
+    // Take origin and dest
+    origin = "{{origin}}"
+    destination = "{{dest}}"
+
+    // Display a Loading Icon
+    this.statusmsg("Loading...");
+
+    // find stations near origin and dest
+    var baseurl = "http://localhost:5000/api/nearest?poi=";
+    var oreq = baseurl+origin.replace(/\s+/g, '')
+    var dreq = baseurl+destination.replace(/\s+/g, '');
+    var origin_station;
+    var dest_station;
+
+    $.ajax({
+        url: oreq,
+        dataType: "json",
+        async: false,
+        type: 'GET',
+        success: function (data) {
+              // write your parsing code..
+              origin_station = data;
+        },
+        error: function (err) {
+             window.location.href = "http://localhost:5000/error/";
+        }
+    });
+
+    $.ajax({
+        url: dreq,
+        dataType: "json",
+        async: false,
+        type: 'GET',
+        success: function (data) {
+              // write your parsing code..
+              dest_station = data;
+        },
+        error: function (err) {
+             window.location.href = "http://localhost:5000/error/";
+        }
+    });
+
+    //Remove Loading Msg
+    this.statusmsg('');
+
+    console.log(origin_station);
+    console.log(dest_station);
+
+
+    var routestr = '';
+    // put directions to station from origin
+    
+
+    //First Leg of the Trip
+    req = 'http://localhost:5000/api/walkPath?origin='+origin+'&dest='+origin_station['Latitude']+','+origin_station['Longitude'];
+    var legA;        
+    $.ajax({
+        url: req,
+        dataType: "json",
+        async: false,
+        type: 'GET',
+        success: function (data) {
+              // write your parsing code..
+              //console.log(data);
+              // Parse and Post
+              console.log(data['routes'][0]);
+              legA = data['routes'][0]['legs'][0]['steps'];
+              console.log(legA);
+        },
+        error: function (err) {
+             //window.location.href = "http://localhost:5000/error/";
+        }
+    });
+
+    //For each step, print it out
+    for(i = 0; i< legA.length; i++){
+        routestr = routestr + '<div class="step">'
+        icon = getIconStr(legA[i]['html_instructions'], 1)
+        routestr = routestr + '<div class="routeIcon"><img src="/static/images/'+icon+'.png"></div><div class="stepText"><p>'
+
+        if(legA[i]['html_instructions'].indexOf('Destination') > -1){
+        	index = legA[i]['html_instructions'].indexOf('Destination');
+			routestr = routestr + legA[i]['html_instructions'].substring(0, index-31) +"</p>";
+			routestr = routestr + '<p class="minorText">'+legA[i]['distance']['text']+', '+legA[i]['duration']['text']+"</p></div></div>";
+			routestr = routestr + '<div class="step">'
+			routestr = routestr + '<div class="routeIcon"><img src="/static/images/pickup.png"></div><div class="stepText"><p>'
+			routestr = routestr + '<b>Pick up<b> bike at <b>'+origin_station['Name']+'</b> Bikeshare station.</p></div></div>';
+        }
+        else if(i == legA.length -1){
+        	index = legA[i]['html_instructions'].indexOf('Destination');
+			routestr = routestr + legA[i]['html_instructions']+"</p>";
+			routestr = routestr + '<p class="minorText">'+legA[i]['distance']['text']+', '+legA[i]['duration']['text']+"</p></div></div>";
+			routestr = routestr + '<div class="step">'
+			routestr = routestr + '<div class="routeIcon"><img src="/static/images/pickup.png"></div><div class="stepText"><p>'
+			routestr = routestr + '<b>Pick up<b> bike at <b>'+origin_station['Name']+'</b> Bikeshare station.</p></div></div>';
+        }
+		else{
+        	routestr = routestr + legA[i]['html_instructions'] +"</p>";
+        	routestr = routestr + '<p class="minorText">'+legA[i]['distance']['text']+', '+legA[i]['duration']['text']+"</p></div></div>";
+    	}
+    }
+
+    //Second Leg of Trip
+    req = 'http://localhost:5000/api/walkPath?origin='+dest_station['Latitude']+','+dest_station['Longitude']+'&dest='+origin_station['Latitude']+','+origin_station['Longitude'];
+    var legB;        
+    $.ajax({
+        url: req,
+        dataType: "json",
+        async: false,
+        type: 'GET',
+        success: function (data) {
+              // write your parsing code..
+              //console.log(data);
+              // Parse and Post
+              console.log(data['routes'][0]);
+              legB = data['routes'][0]['legs'][0]['steps'];
+              console.log(legB);
+        },
+        error: function (err) {
+             //window.location.href = "http://localhost:5000/error/";
+        }
+    });
+
+    //For each step, print it out
+    for(i = 0; i< legB.length; i++){
+		routestr = routestr + '<div class="step">'
+        icon = getIconStr(legB[i]['html_instructions'],2)
+        routestr = routestr + '<div class="routeIcon"><img src="/static/images/'+icon+'.png"></div><div class="stepText"><p>'
+        
+        if(legB[i]['html_instructions'].indexOf('Destination') > -1 || i == legB.length-1){
+        	index = legB[i]['html_instructions'].indexOf('Destination');
+			routestr = routestr + legB[i]['html_instructions'].substring(0, index-31) +"</p>";
+			routestr = routestr + '<p class="minorText">'+legB[i]['distance']['text']+', '+legB[i]['duration']['text']+"</p></div></div>";
+			routestr = routestr + '<div class="step">'
+			routestr = routestr + '<div class="routeIcon"><img src="/static/images/dropoff.png"></div><div class="stepText"><p>'
+			routestr = routestr + '<b>Dock<b> bike at <b>'+dest_station['Name']+'</b> Bikeshare station.</p></div></div>';
+        }
+        else if(i == legB.length -1){
+        	index = legB[i]['html_instructions'].indexOf('Destination');
+			routestr = routestr + legB[i]['html_instructions']+"</p>";
+			routestr = routestr + '<p class="minorText">'+legB[i]['distance']['text']+', '+legB[i]['duration']['text']+"</p></div></div>";
+			routestr = routestr + '<div class="step">'
+			routestr = routestr + '<div class="routeIcon"><img src="/static/images/dropoff.png"></div><div class="stepText"><p>'
+			routestr = routestr + '<b>Dock<b> bike at <b>'+dest_station['Name']+'</b> Bikeshare station.</p></div></div>';
+        }
+		else{
+        	routestr = routestr + legB[i]['html_instructions'] +"</p>";
+        	routestr = routestr + '<p class="minorText">'+legB[i]['distance']['text']+', '+legB[i]['duration']['text']+"</p></div></div>";
+    	}
+    }
+
+    //Third Leg of Trip
+    req = 'http://localhost:5000/api/walkPath?origin='+dest_station['Latitude']+','+dest_station['Longitude']+'&dest='+destination;
+    var legC;        
+    $.ajax({
+        url: req,
+        dataType: "json",
+        async: false,
+        type: 'GET',
+        success: function (data) {
+              // write your parsing code..
+              //console.log(data);
+              // Parse and Post
+              console.log(data['routes'][0]);
+              legC = data['routes'][0]['legs'][0]['steps'];
+              console.log(legC);
+        },
+        error: function (err) {
+             //window.location.href = "http://localhost:5000/error/";
+        }
+    });
+
+    //For each step, print it out
+    for(i = 0; i< legC.length; i++){
+		routestr = routestr + '<div class="step">'
+        icon = getIconStr(legC[i]['html_instructions'],3)
+        routestr = routestr + '<div class="routeIcon"><img src="/static/images/'+icon+'.png"></div><div class="stepText"><p>'
+        
+        if(legC[i]['html_instructions'].indexOf('Destination') > -1){
+        	index = legC[i]['html_instructions'].indexOf('Destination');
+			routestr = routestr + legC[i]['html_instructions'].substring(0, index-31) +"</p>";
+			routestr = routestr + '<p class="minorText">'+legC[i]['distance']['text']+', '+legC[i]['duration']['text']+"</p></div></div>";
+			routestr = routestr + '<div class="step">'
+			routestr = routestr + '<div class="routeIcon"><img src="/static/images/dest.png"></div><div class="stepText"><p>'
+			routestr = routestr + '<b>Arrive <b>at <b>'+destination+'</b>.</p></div></div>';
+        }
+        else if(i == legC.length-1)
+        {
+			routestr = routestr + legC[i]['html_instructions']+"</p>";
+			routestr = routestr + '<p class="minorText">'+legC[i]['distance']['text']+', '+legC[i]['duration']['text']+"</p></div></div>";
+			routestr = routestr + '<div class="step">'
+			routestr = routestr + '<div class="routeIcon"><img src="/static/images/dest.png"></div><div class="stepText"><p>'
+			routestr = routestr + '<b>Arrive <b>at <b>'+destination+'</b>.</p></div></div>';
+        }
+		else{
+        	routestr = routestr + legC[i]['html_instructions'] +"</p>";
+        	routestr = routestr + '<p class="minorText">'+legC[i]['distance']['text']+', '+legC[i]['duration']['text']+"</p></div></div>";
+    	}
+    }
+
+    //Print Route
+    this.route(routestr);
+
+};
+ 
+ko.applyBindings(new ViewModel("633 Bay St, Toronto ON", "45 Ulster, Toronto On")); // This makes Knockout get to work
+
+
+</script>
+
 </body>

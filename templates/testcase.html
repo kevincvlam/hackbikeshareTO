@@ -94,9 +94,14 @@ var ViewModel = function(origin, dest) {
         var routestr = '';
         this.routeHeading("Computed Route");
         // put directions to station from origin
-        routestr = "<h3>Directions from "+origin+" to "+origin_station['Name']+"</h3>";
+        
 
-        req = 'http://localhost:5000/api/walkPath?origin='+origin+'&destination='+origin_station['Latitude']+','+origin_station['Longitude'];
+        
+
+        //First Leg of the Trip
+        routestr = "<h3>Directions from "+origin+" to "+origin_station['Name']+" Bikeshare Station</h3>";
+        req = 'http://localhost:5000/api/walkPath?origin='+origin+'&dest='+origin_station['Latitude']+','+origin_station['Longitude'];
+        var legA;        
         $.ajax({
             url: req,
             dataType: "json",
@@ -104,19 +109,86 @@ var ViewModel = function(origin, dest) {
             type: 'GET',
             success: function (data) {
                   // write your parsing code..
-                  console.log(data);
+                  //console.log(data);
+                  // Parse and Post
+                  console.log(data['routes'][0]);
+                  legA = data['routes'][0]['legs'][0]['steps'];
+                  console.log(legA);
             },
             error: function (err) {
-                 window.location.href = "http://localhost:5000/error/";
+                 //window.location.href = "http://localhost:5000/error/";
             }
         });
-        
-        // find station near dest
-        // put directions between stations
 
-        // put directions to destination station
+        //For each step, print it out
+        for(i = 0; i< legA.length; i++){
+            routestr = routestr + "<p>"
+            routestr = routestr + legA[i]['html_instructions'] +"<br>";
+            //routestr = routestr + legA[i]['duration']['text'] +", ";
+            //routestr = routestr + legA[i]['distance']['text'] +"</p>    ";
+        }
 
-        //print route
+        //Second Leg of Trip
+        routestr = routestr + "<h3>Directions from "+origin_station['Name']+" Bikeshare Station to "+dest_station['Name']+" Bikeshare Station</h3>";
+        req = 'http://localhost:5000/api/walkPath?origin='+dest_station['Latitude']+','+dest_station['Longitude']+'&dest='+origin_station['Latitude']+','+origin_station['Longitude'];
+        var legB;        
+        $.ajax({
+            url: req,
+            dataType: "json",
+            async: false,
+            type: 'GET',
+            success: function (data) {
+                  // write your parsing code..
+                  //console.log(data);
+                  // Parse and Post
+                  console.log(data['routes'][0]);
+                  legB = data['routes'][0]['legs'][0]['steps'];
+                  console.log(legB);
+            },
+            error: function (err) {
+                 //window.location.href = "http://localhost:5000/error/";
+            }
+        });
+
+        //For each step, print it out
+        for(i = 0; i< legB.length; i++){
+            routestr = routestr + "<p>"
+            routestr = routestr + legB[i]['html_instructions'] +"<br>";
+            // routestr = routestr + legB[i]['duration']['text'] +", ";
+            //routestr = routestr + legB[i]['distance']['text'] +"<br>";
+        }
+
+        //Third Leg of Trip
+        routestr = routestr + "<h3>Directions from "+dest_station['Name']+" Bikeshare Station to "+destination+"</h3>";
+        req = 'http://localhost:5000/api/walkPath?origin='+dest_station['Latitude']+','+dest_station['Longitude']+'&dest='+destination;
+        var legC;        
+        $.ajax({
+            url: req,
+            dataType: "json",
+            async: false,
+            type: 'GET',
+            success: function (data) {
+                  // write your parsing code..
+                  //console.log(data);
+                  // Parse and Post
+                  console.log(data['routes'][0]);
+                  legC = data['routes'][0]['legs'][0]['steps'];
+                  console.log(legC);
+            },
+            error: function (err) {
+                 //window.location.href = "http://localhost:5000/error/";
+            }
+        });
+
+        //For each step, print it out
+        for(i = 0; i< legC.length; i++){
+            routestr = routestr + "<p>"
+            routestr = routestr + legC[i]['html_instructions'] +"<br>";
+            // routestr = routestr + legB[i]['duration']['text'] +", ";
+            //routestr = routestr + legB[i]['distance']['text'] +"<br>";
+        }
+
+        //Print Route
         this.route(routestr);
     };
 };

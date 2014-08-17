@@ -8,32 +8,66 @@
 <!-- Custom CSS -->
 <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/style.css') }}">
 <!-- Latest compiled and minified JavaScript -->
+<script src="{{ url_for('static', filename='js/jquery-2.1.1.min.js') }}"></script>
 <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/knockout-3.1.0.js') }}"></script>
 </head>
 <body>
 	<h1 class="header">Bike Share Trip Planner</h1>
 	<div class="content">
-		<p>Enter the addresses of your starting location and destination, and we’ll find you a route using Bike Share!</p>
-		<div class="inputForm">
-			<form">
-				<div class="fieldContainer">
-					<div class="icon">
-						<img src="/static/images/origin.png">
+
+		<div id='step1'>
+			<p>Enter the addresses of your starting location and destination, and we’ll find you a route using Bike Share!</p>
+			<div class="inputForm">
+				<form>
+					<div class="fieldContainer">
+						<div class="icon">
+							<img src="/static/images/origin.png">
+						</div>
+						<div class="field">
+							<input data-bind="value: origin" type="text" name="origin" placeholder="Starting Location" /><br />
+						</div>
 					</div>
-					<div class="field">
-						<input type="text" name="origin" placeholder="Starting Location" /><br />
+					<div class="fieldContainer">
+						<div class="icon">
+							<img src="/static/images/dest.png">
+						</div>
+						<div class="field">
+							<input data-bind="value: destination" type="text" name="destination" placeholder="Destination "/><br />
+						</div>
 					</div>
-				</div>
-				<div class="fieldContainer">
-					<div class="icon">
-						<img src="/static/images/dest.png">
-					</div>
-					<div class="field">
-						<input type="text" name="destination" placeholder="Destination "/><br />
-					</div>
-				</div>
-				<input class="submit" type="submit" value="Find me a route!" action="{{ route }}" method="post"/>
-			</form>
+					<input data-bind="click: findRoute" class="submit" type="submit" value="Find me a route!"/>
+				</form>
+			</div>
 		</div>
+
+
 	</div>
+
+
+<script>
+// Here's my data model
+var ViewModel = function(origin, dest) {
+    this.origin = ko.observable(origin);
+    this.destination = ko.observable(dest);
+ 
+    this.findRoute = function() {
+        //console.log(this.origin() + " to " + this.destination() )
+
+        // Take origin and dest
+        origin = this.origin();
+        destination = this.destination();
+
+       //Route to Page Giving Correct Arguments
+       baseurl = "http://localhost:5000"
+       window.location.href = "http://localhost:5000/route?origin="+origin+"&dest="+destination;
+    };
+};
+ 
+defaultorig = "{{origin}}"
+defaultdest = "{{dest}}"
+//ko.applyBindings(new ViewModel("633 Bay St, Toronto ON", "45 Ulster, Toronto On")); // This makes Knockout get to work
+ko.applyBindings(new ViewModel(defaultorig, defaultdest)); // This makes Knockout get to work
+
+</script>	
 </body>
