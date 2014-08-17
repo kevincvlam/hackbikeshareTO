@@ -1,17 +1,23 @@
 /* STYYYYYYLE!!! */
 
+body {
+	background-color: #f2f2f2;
+}
+
 .content {
 	margin: 10px;
+	max-width: 960px;
+
 }
 
 .header {
 	height: 100px;
 	width: 100%;
 	color: #ffffff;
-	font-family: 'Open Sans';
+	font-family: 'Open Sans', 'Ariel';
 	text-transform: uppercase;
 	text-align: center;	
-	background-color: #2eb458;
+	background-color: #107054;
 }
 
 .hidden {
@@ -26,15 +32,24 @@ p {
 	margin: 0px;
 }
 
+#step1 {
+	max-width: 640px;
+	margin: 50px auto;
+	padding: 20px;
+	text-align: center;
+	background-color: #fafafa;
+	border: 1px solid #d9d9d9;
+}
+
 div.desc {
 	width: 100%;
 	text-align: center;
 }
 
-div.desc > p {
+#step1 > p {
 	max-width: 640px;
 	display: block;
-	margin: 0 auto;
+	margin: 0 auto 20px;
 }
 
 /* Forms */
@@ -78,7 +93,7 @@ input.submit, .button {
 	border: 0px;
 	font-weight: 500;
 	color: #FFFFFF;
-	background-color: #107054;
+	background-color: #2eb458;
 }
 
 .button, a	 {
@@ -93,7 +108,7 @@ input.submit, .button {
 }
 
 .button:hover, input.submit:hover {
-	background-color: #2eb458;
+	background-color: #41FF7D;
 }
 
 /* Route Steps */
@@ -133,13 +148,13 @@ div.routeIcon > img {
 
 /* Map page */
 .viewing-map {
-	max-height: 640px;
+	max-height: 680px;
 }
 
 .map {
 	display: table;
 	width: 100%;
-	height: 640px;
+	height: 600px;
 	overflow: hidden;
 }
 
