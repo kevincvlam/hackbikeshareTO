@@ -1,4 +1,4 @@
-createProbabilityMatrix <- function(probs,totalDocks){
+createProbabilityMatrix <- function(counts,totalDocks){
   
   probabilityMatrix <- matrix(numeric(0),totalDocks+1,totalDocks+1)
   colnames(probabilityMatrix) <- (0:totalDocks)

@@ -56,6 +56,21 @@
 </footer>
 
 <script>
+function baseURL(){
+    current = window.location.href;
+    if(current.indexOf('.com') > - 1){
+        end = current.indexOf('.com')+4;
+    }
+    else if(current.indexOf('localhost') > - 1){
+        end = current.indexOf(':',6)+5;
+    }
+    else{
+        end = 0;
+    }
+    return current.substring(0, end)
+}
+
+console.log(baseURL());
 // Here's my data model
 var ViewModel = function(origin, dest) {
     this.origin = ko.observable(origin);
@@ -69,8 +84,7 @@ var ViewModel = function(origin, dest) {
         destination = this.destination();
 
        //Route to Page Giving Correct Arguments
-       baseurl = "http://localhost:5000"
-       window.location.href = "http://localhost:5000/route?origin="+origin+"&dest="+destination;
+       window.location.href = "/route?origin="+origin+"&dest="+destination;
     };
 };
  

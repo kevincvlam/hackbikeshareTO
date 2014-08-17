@@ -105,6 +105,20 @@ function getIconStr(instr, leg) {
     return 'origin'
 }
 
+function baseURL(){
+    current = window.location.href;
+    if(current.indexOf('.com') > - 1){
+        end = current.indexOf('.com')+4;
+    }
+    else if(current.indexOf('localhost') > - 1){
+        end = current.indexOf(':',6)+5;
+    }
+    else{
+        end = 0;
+    }
+    return current.substring(0, end)
+}
+
 // DATA MODEL /////////////////////////////////////////////////////////////////////
 var ViewModel = function(origin, dest) {
     this.route = ko.observable();
@@ -120,7 +134,7 @@ var ViewModel = function(origin, dest) {
     this.statusmsg("Loading...");
 
     // find stations near origin and dest
-    var baseurl = "http://localhost:5000/api/nearest?poi=";
+    var baseurl = baseURL()+"/api/nearest?poi=";
     var oreq = baseurl+origin
     var dreq = baseurl+destination
     var origin_station;
@@ -166,7 +180,7 @@ var ViewModel = function(origin, dest) {
     
 
     //First Leg of the Trip
-    req = 'http://localhost:5000/api/walkPath?origin='+origin+'&dest='+origin_station['Latitude']+','+origin_station['Longitude'];
+    req = baseURL()+'/api/walkPath?origin='+origin+'&dest='+origin_station['Latitude']+','+origin_station['Longitude'];
     var legA;        
     $.ajax({
         url: req,
@@ -215,7 +229,7 @@ var ViewModel = function(origin, dest) {
     }
 
     //Second Leg of Trip
-    req = 'http://localhost:5000/api/walkPath?origin='+origin_station['Latitude']+','+origin_station['Longitude']+'&dest='+dest_station['Latitude']+','+dest_station['Longitude'];
+    req = baseURL()+'/api/walkPath?origin='+origin_station['Latitude']+','+origin_station['Longitude']+'&dest='+dest_station['Latitude']+','+dest_station['Longitude'];
     var legB;        
     $.ajax({
         url: req,
@@ -264,7 +278,7 @@ var ViewModel = function(origin, dest) {
     }
 
     //Third Leg of Trip
-    req = 'http://localhost:5000/api/walkPath?origin='+dest_station['Latitude']+','+dest_station['Longitude']+'&dest='+destination;
+    req = baseURL()+'/api/walkPath?origin='+dest_station['Latitude']+','+dest_station['Longitude']+'&dest='+destination;
     var legC;        
     $.ajax({
         url: req,
