@@ -37,7 +37,7 @@ def returnNearestStation(origin):
 	geocodeResp = requests.get(uri)
 	jsonText = geocodeResp.text
 	jsonText = jsonText[jsonText.index('(')+1:jsonText.index(')')]
-	print jsonText
+	#print jsonText
 	obj = json.loads(jsonText)
 	#print(obj)
 	latitude = obj['results'][0]['locations'][0]['latLng']['lat']
