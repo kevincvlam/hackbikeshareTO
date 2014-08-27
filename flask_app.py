@@ -96,6 +96,8 @@ def closestStation():
 	if poi is None:
 		return render_template('error.html')
 	station = returnNearestStation(poi)
+	if station i s None:
+		return render_template('error.html')
 	json = {'ID': station[0], 'Name': station[1], 'Latitude': station[3], 'Longitude':station[4]}
 	return jsonify(json)
 
